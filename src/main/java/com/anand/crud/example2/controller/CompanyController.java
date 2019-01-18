@@ -3,6 +3,10 @@ package com.anand.crud.example2.controller;
 
 import com.anand.crud.example2.model.Company;
 import com.anand.crud.example2.service.CompanyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +14,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+
 @RestController
+@Api(value = "Company Resource", description = "All API related to Company")
 public class CompanyController {
 
     @Autowired
     CompanyService companyService;
 
+    @ApiOperation(value = "Add Company")
     @PostMapping("/companies")
+    @ApiResponses(
+            value =
+                    {
+                            @ApiResponse(code = 500, message = "Internal Server Error")
+                    }
+    )
     public ResponseEntity<Company> add(@RequestBody Company company)
     {
         Company result = companyService.add(company);
